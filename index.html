@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6-Axis Simulation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            align-content: center;
+            align-items: center;
+        }
+        h1 {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+        }
+        #simulation-container {
+            margin: 0px auto;
+            text-align: center;
+            align-items: center;
+            padding-top: 50px;
+        }
+        canvas {
+            display: block;
+            margin: 0 auto;
+            background-color: #222;
+            width:max-content;
+        }
+        .controls {
+            text-align: center;
+            background-color: #f0f0f0;
+            padding: 20px 0px 0px 0px;
+        }
+        .manualDegreeDiv {
+            display: inline-block;
+            margin: 10px;
+        }
+        button {
+            background-color: #333;
+            color: white;
+            padding: 10px 15px;
+            margin: 5px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #555;
+        }
+        #position-controls {
+            text-align: center;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+        #position-controls h2 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        #position-controls label {
+            margin: 0 5px;
+            font-weight: bold;
+        }
+        #position-controls input {
+            padding: 8px;
+            margin: 0 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .column {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            flex-direction: column;
+            margin-bottom: 15px;
+        }
+        .column div {
+            margin: 10px 0;
+        }
+        .row {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+        .row button {
+            height: 40px;
+            align-self: center;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>6-Axis Robot Simulation</h1>
+    <div id="simulation-container">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+        <script src="src/dramaticLights.js"></script>
+        <script src="src/simu.js"></script>
+        <script src="src/controls.js"></script>
+        <script src="src/mouseInput.js"></script>
+        <script src="src/kinematics.js"></script>
+    </div>
+    <div id="controls" class="controls">
+        <!-- Buttons for manual control of each axis grouped with a reading of the actual rotation in degrees with getRotationAngleInDegrees(axis) -->
+        <div class="manualDegreeDiv">
+            <button onmousedown="manualModeStart(1, 1)" onmouseup="manualModeEnd()" onmouseleave="manualModeEnd()">Axis 1 +</button>
+            <button onmousedown="manualModeStart(1, -1)" onmouseup="manualModeEnd()" onmouseleave="manualModeEnd()">Axis 1 -</button>
+            <p id="axis1-angle"></p>
+        </div>
+        <div class="manualDegreeDiv">
+            <button onmousedown="manualModeStart(2, 1)" onmouseup="manualModeEnd()" onmouseleave="manualModeEnd()">Axis 2 +</button>
+            <button onmousedown="manualModeStart(2, -1)" onmouseup="manualModeEnd()" onmouseleave="manualModeEnd()">Axis 2 -</button>
+            <p id="axis2-angle"></p>
+        </div>
+        <div class="manualDegreeDiv">
+            <button onmousedown="manualModeStart(3, 1)" onmouseup="manualModeEnd()" onmouseleave="manualModeEnd()">Axis 3 +</button>
+            <button onmousedown="manualModeStart(3, -1)" onmouseup="manualModeEnd()" onmouseleave="manualModeEnd()">Axis 3 -</button>
+            <p id="axis3-angle"></p>
+        </div>
+        <div class="manualDegreeDiv">
+            <button onmousedown="manualModeStart(4, 1)" onmouseup="manualModeEnd()" onmouseleave="manualModeEnd()">Axis 4 +</button>
+            <button onmousedown="manualModeStart(4, -1)" onmouseup="manualModeEnd()" onmouseleave="manualModeEnd()">Axis 4 -</button>
+            <p id="axis4-angle"></p>
+        </div>
+        <div class="manualDegreeDiv">
+            <button onmousedown="manualModeStart(5, 1)" onmouseup="manualModeEnd()" onmouseleave="manualModeEnd()">Axis 5 +</button>
+            <button onmousedown="manualModeStart(5, -1)" onmouseup="manualModeEnd()" onmouseleave="manualModeEnd()">Axis 5 -</button>
+            <p id="axis5-angle"></p>
+        </div>
+        <div class="manualDegreeDiv">
+            <button onmousedown="manualModeStart(6, 1)" onmouseup="manualModeEnd()" onmouseleave="manualModeEnd()">Axis 6 +</button>
+            <button onmousedown="manualModeStart(6, -1)" onmouseup="manualModeEnd()" onmouseleave="manualModeEnd()">Axis 6 -</button>
+            <p id="axis6-angle"></p>
+        </div>
+    </div>
+    <div id="position-controls" class="controls">
+        <h2>Move to Position</h2>
+        <div class="row">
+            <div class="column">
+                <p>X: <span id="x-current">0</span></p>
+                <p>Y: <span id="y-current">0</span></p>
+                <p>Z: <span id="z-current">0</span></p>
+            </div>
+            <div class="column">
+                <div>
+                    <label for="x-target">X:</label>
+                    <input type="number" id="x-target" value="0" step="1">
+                    <label for="y-target">Y:</label>
+                    <input type="number" id="y-target" value="0" step="1">
+                    <label for="z-target">Z:</label>
+                    <input type="number" id="z-target" value="0" step="1">
+                </div>
+                <div>
+                    <label for="roll-target">Roll:</label>
+                    <input type="number" id="roll-target" value="0" step="1">
+                    <label for="pitch-target">Pitch:</label>
+                    <input type="number" id="pitch-target" value="0" step="1">
+                    <label for="yaw-target">Yaw:</label>
+                    <input type="number" id="yaw-target" value="0" step="1">
+                </div>
+            </div>
+            <button onclick="moveToPosition()">Move to Position</button>
+        </div>
+    </div>
+</body>
+</html>
