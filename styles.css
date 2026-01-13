@@ -1,0 +1,91 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    align-content: center;
+    align-items: center;
+}
+h1 {
+    text-align: center;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+}
+#simulation-container {
+    margin: 0px auto;
+    text-align: center;
+    align-items: center;
+    padding-top: 50px;
+}
+canvas {
+    display: block;
+    margin: 0 auto;
+    background-color: #222;
+    width:max-content;
+}
+.controls {
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 20px 0px 0px 0px;
+}
+.manualDegreeDiv {
+    display: inline-block;
+    margin: 10px;
+}
+button {
+    background-color: #333;
+    color: white;
+    padding: 10px 15px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+button:hover {
+    background-color: #555;
+}
+#position-controls {
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 20px;
+}
+#position-controls h2 {
+    margin-bottom: 15px;
+    color: #333;
+}
+#position-controls label {
+    margin: 0 5px;
+    font-weight: bold;
+}
+#position-controls input {
+    padding: 8px;
+    margin: 0 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.column {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+.column div {
+    margin: 10px 0;
+}
+.row {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+.row button {
+    height: 40px;
+    align-self: center;
+}
