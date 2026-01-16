@@ -11,6 +11,7 @@
     <div id="simulation-container">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
         <script src="src/dramaticLights.js"></script>
+        <script src="src/gridTest.js"></script>
         <script src="src/simu.js"></script>
         <script src="src/controls.js"></script>
         <script src="src/mouseInput.js"></script>
@@ -48,6 +49,14 @@
             <button onmousedown="manualModeStart(5, -1)" onmouseup="manualModeEnd()" onmouseleave="manualModeEnd()">Axis 6 -</button>
             <p id="axis6-angle"></p>
         </div>
+    </div>
+    <div id="camera-controls">
+        <button onmousedown="switch_view('perspective')">Perspective</button>
+        <button onmousedown="switch_view('top')">Top</button>
+        <button onmousedown="switch_view('front')">Front</button>
+        <button onmousedown="switch_view('right')">Right</button>
+        <button onmousedown="switch_view('left')">Left</button>
+        <button onmousedown="switch_view('back')">Back</button>
     </div>
     <div id="position-controls" class="controls">
         <h2>Move to Position</h2>
