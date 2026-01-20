@@ -19,7 +19,7 @@ function computeKinematics() {
     let theta_base_target = Math.acos(base_length/distance_XY);
 
     // Angle between axis x and target position
-    let theta_x_target = Math.acos(x_target/distance_XY);
+    let theta_x_target = Math.acos(Math.abs(x_target)/distance_XY);
 
 
     // Axes 2 and 3
@@ -49,9 +49,8 @@ function computeKinematics() {
     current_permutations = {};
     // permutation sign NEGATIVE
     let axis1_target_neg_perm = Math.sign(x_target)*Math.sign(y_target)*theta_x_target + theta_base_target; 
-    
     if(x_target < 0)
-        axis1_target_neg_perm = 2*Math.PI + axis1_target_neg_perm;
+        axis1_target_neg_perm = Math.PI + axis1_target_neg_perm;
 
     current_permutations[1] = {
         "axis1_target" : axis1_target_neg_perm, 
@@ -67,7 +66,7 @@ function computeKinematics() {
     // permutation sign POSITIVE
     let axis1_target_pos_perm = Math.sign(x_target)*Math.sign(y_target)*theta_x_target - theta_base_target; 
     if(x_target < 0)
-        axis1_target_pos_perm = 2*Math.PI + axis1_target_pos_perm;
+        axis1_target_pos_perm = Math.PI + axis1_target_pos_perm;
 
     current_permutations[3] = {
         "axis1_target" : axis1_target_pos_perm, 
@@ -97,5 +96,5 @@ function showPermutation(permutation_index){
     console.log("Y: " + target_threejs_world_position.z);
     console.log("Z: " + (target_threejs_world_position.y - 3.0));
 
-    updateDegreesDisplay()
+    updateDegreesDisplay();
 }
