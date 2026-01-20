@@ -83,12 +83,14 @@
                     <input type="number" id="yaw-target" value="0" step="1">
                 </div>
             </div>
-            <button onclick="computeKinematics()">Create Permutations</button>
-            <div>
-                <label for="permutations-list">Permutations:</label>
-                <select id="permutations-list" onchange="showPermutation(this.value)">
-                    <option value="">-- Select Preset --</option>
-                </select>
+            <div class="column">
+                <button onclick="computeKinematics()">Create Permutations</button>
+                <div>
+                    <label for="permutations-list">Permutations:</label>
+                    <select id="permutations-list" onchange="showPermutation(this.value)">
+                        <option value="">-- Select Preset --</option>
+                    </select>
+                </div>
             </div>
         </div>
     </div>

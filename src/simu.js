@@ -43,7 +43,7 @@ let axis = [scene.getObjectByName("Axis1"),
             scene.getObjectByName("Axis4"),
             scene.getObjectByName("Axis5"),
             scene.getObjectByName("Axis6")];
-let rotation_axis = ["y","x","x","y","x","y"];
+let rotation_axis = ["y","x","x","z","y","x"];
 let axis_target_angles = [0, 0, 0, 0, 0, 0];
 
 let current_permutations = {};
