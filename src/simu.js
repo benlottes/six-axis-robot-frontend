@@ -13,17 +13,13 @@ const minDistance = 20;
 const maxDistance = 50;
 
 // scene
-const scene = new THREE.Scene();
+const loader = new THREE.ObjectLoader();
+const scene = loader.parse(robot_model.scene);
 scene.background = new THREE.Color(0);
 
-// pivot group
-const viewingAnglePivot = new THREE.Group();
-scene.add(viewingAnglePivot);
-
-// Load the scene from JSON in dramaticLights.js
-const loader = new THREE.ObjectLoader();
-const loadedScene = loader.parse(json_data_grid.scene);
-viewingAnglePivot.add(loadedScene);
+const cameraPivot = new THREE.Object3D();
+scene.add(cameraPivot);
+cameraPivot.add(camera);
 
 // Create Orothographic camera
 const ortho_camera = new THREE.OrthographicCamera( width / - 16, width / 16, height / 16 , height / - 16, 0.1, 1000 );
@@ -61,6 +57,7 @@ function switch_view(side){
             ortho_camera.position.y = 30;
             ortho_camera.position.z = 0;
             ortho_camera.rotation.x = -Math.PI/2;
+            ortho_camera.rotation.y = 0;
             ortho_camera.rotation.z = Math.PI;
             current_camera = ortho_camera;
             break;
@@ -69,27 +66,35 @@ function switch_view(side){
             ortho_camera.position.y = 5;
             ortho_camera.position.z = 15;
             ortho_camera.rotation.x = 0;
+            ortho_camera.rotation.y = 0;
+            ortho_camera.rotation.z = 0;
             current_camera = ortho_camera;
             break;
         case "right": // from the front, so around the vertical axis to the right while looking at the front
             ortho_camera.position.x = 15;
             ortho_camera.position.y = 5;
             ortho_camera.position.z = 0;
+            ortho_camera.rotation.x = 0;
             ortho_camera.rotation.y = Math.PI/2;
+            ortho_camera.rotation.z = 0;
             current_camera = ortho_camera;
             break;
         case "left": // from the front, so around the vertical axis to the left while looking at the front
             ortho_camera.position.x = -15;
             ortho_camera.position.y = 5;
             ortho_camera.position.z = 0;
+            ortho_camera.rotation.x = 0;
             ortho_camera.rotation.y = -Math.PI/2;
+            ortho_camera.rotation.z = 0;
             current_camera = ortho_camera;
             break;
         case "back":
             ortho_camera.position.x = 0;
             ortho_camera.position.y = 5;
             ortho_camera.position.z = -15;
+            ortho_camera.rotation.x = 0;
             ortho_camera.rotation.y = Math.PI;
+            ortho_camera.rotation.z = 0;
             current_camera = ortho_camera;
             break;
         case "perspective":
@@ -100,9 +105,5 @@ function switch_view(side){
 
 // animation loop
 function animate() {
-    axis[0].rotation[rotation_axis[0]] = axis_target_angles[0];
-    axis[1].rotation[rotation_axis[1]] = axis_target_angles[1];
-    axis[2].rotation[rotation_axis[2]] = axis_target_angles[2];
-    
     renderer.render(scene, current_camera);
 }

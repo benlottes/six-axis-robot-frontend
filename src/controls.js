@@ -3,6 +3,7 @@ let rotator;
 function manualModeStart(i, direction) {
     rotator = setInterval(function() {
         axis[i].rotation[rotation_axis[i]] += 0.01 * direction;
+        console.log(axis[i].rotation[rotation_axis[i]]);
         }, 8);
 }
 
@@ -21,7 +22,8 @@ function updateDegreesDisplay() {
 }
 
 function manualModeEnd() {
-    clearInterval(rotator)
+    clearInterval(rotator);
+    updateDegreesDisplay();
 }
 
 function updatePresetList() {

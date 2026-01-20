@@ -27,7 +27,7 @@ window.addEventListener('mousemove', (e) => {
   const maxHeight = 80;
 
   // rotate scene around world Y (no tilt)
-  viewingAnglePivot.rotation.y += deltaX * rotationSpeed;
+  cameraPivot.rotation.y += -deltaX * rotationSpeed;
 
   // inverted vertical: dragging up (negative deltaY) moves camera down
   camera.position.y += deltaY * verticalSpeed;
@@ -48,7 +48,7 @@ window.addEventListener('mousemove', (e) => {
 renderer.domElement.addEventListener('wheel', (e) => {
   e.preventDefault();
 
-  const zoomSpeed = 0.001;
+  const zoomSpeed = 0.01;
   cameraDistance += e.deltaY * zoomSpeed;
 
   cameraDistance = Math.max(minDistance, Math.min(maxDistance, cameraDistance));
